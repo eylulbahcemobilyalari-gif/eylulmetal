@@ -3,38 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eylül Metal | Mobilya & Yapı Sistemleri</title>
+    <title>Eylül Metal & Mobilya</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* GENEL AYARLAR */
         :root {
-            --primary: #1A4D2E;
-            --accent: #D4A373;
-            --bg: #F5F7F5;
+            --primary: #2C3E50; /* Metal/Koyu Gri - Kurumsal */
+            --accent: #E67E22;  /* Turuncu - Dikkat Çekici */
+            --bg: #F4F6F7;
             --text: #333;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg); color: var(--text); }
 
-        /* HEADER */
+        /* HEADER (ÜST KISIM) */
         header {
             background: white; padding: 1rem 5%;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--accent); }
         .contact-btn {
-            background: #25D366; color: white; padding: 8px 15px; border-radius: 20px;
+            background: #25D366; color: white; padding: 10px 20px; border-radius: 30px;
             text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .contact-btn:hover { background: #128C7E; transform: translateY(-2px); }
+
+        /* HERO (KAPAK) */
+        .hero {
+            height: 400px;
+            /* Arka plan: Temsili gri/metalik bir ton */
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: white; padding: 20px;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; }
+
+        /* KATEGORİ BUTONLARI */
+        .filters { padding: 30px 2%; background: white; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #ddd; }
+        .btn {
+            padding: 10px 25px; border: 2px solid #ddd; background: white;
+            border-radius: 50px; cursor: pointer; font-weight: 600; color: #555;
+            transition: all 0.3s ease;
+        }
+        .btn:hover, .btn.active { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
+
+        /* ÜRÜN LİSTESİ (GRID) */
+        .container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+
+        .card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            display: flex; flex-direction: column; border: 1px solid #eee;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+        .img-wrap { height: 250px; overflow: hidden; position: relative; cursor: pointer; background: #eee; }
+        .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .img-wrap img { transform: scale(1.1); }
+        
+        .badge {
+            position: absolute; top: 15px; right: 15px;
+            background: var(--accent); color: white;
+            padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* HERO */
-        .hero {
-            height: 450px;
-            /* Arka plan resmi - İlk başta Paris takımı görünsün */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('resimler/paris.jpg');
-            background-size: cover; background-position: center;
-            display: flex; align-items: center; justify-content: center;
+        .info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .title { font-size: 1.35rem; color: var(--primary); margin-bottom: 10px; font-weight: 700; }
+        .desc { font-size: 0.95rem; color: #666; margin-bottom: 20px; flex-grow: 1; line-height: 1.5; }
+        .code { font-size: 0.85rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; display: flex; align-items: center; gap: 5px;}
+
+        .whatsapp-card {
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            background: #f0fdf4; color: #16a34a;
+            padding: 12px; margin-top: 15px;
+            text-decoration: none; border-radius: 8px; font-weight: bold;
+            border: 1px solid #bbf7d0; transition: 0.3s;
+        }
+        .whatsapp-card:hover { background: #25D366; color: white; border-color: #25D366; }
+
+        /* BÜYÜK RESİM (LIGHTBOX) */
+        .lightbox {
+            display: none; position: fixed; z-index: 2000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center; flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+        .lightbox img { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .close-lb { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; transition: 0.3s; }
+        .close-lb:hover { color: var(--accent); }
+
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 2rem; } 
+            .grid { grid-template-columns: 1fr; } 
+            .filters { gap: 5px; }
+            .btn { padding: 8px 15px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo"><i class="fas fa-hammer"></i> EYLÜL METAL</div>
+    <a href="https://wa.me/905555555555" target="_blank" class="contact-btn">
+        <i class="fab fa-whatsapp"></i> Sipariş Hattı
+    </a>
+</header>
+
+<section class="hero">
+    <h1>Eylül Metal & Mobilya</h1>
+    <p>Bahçe Mobilyası, Korkuluk Sistemleri, Baza ve Ev Dekorasyonu</p>
+</section>
+
+<div class="filters">
+    <button class="btn active" onclick="filter('all')">Tümü</button>
+    <button class="btn" onclick="filter('bahce')">Bahçe Mobilya</button>
+    <button class="btn" onclick="filter('koltuk')">Koltuk Takımı</button>
+    <button class="btn" onclick="filter('korkuluk')">Korkuluk</button>
+    <button class="btn" onclick="filter('masa')">Masa Sandalye</button>
+    <button class="btn" onclick="filter('baza')">Baza & Yatak</button>
+    <button class="btn" onclick="filter('dolap')">Gardrop</button>
+</div>
+
+<div class="container">
+    <div class="grid" id="gallery"></div>
+</div>
+
+<div id="lightbox" class="lightbox" onclick="this.style.display='none'">
+    <span class="close-lb">&times;</span>
+    <img id="lb-img" src="">
+</div>
+
+<script>
+    /* DİKKAT: Fotoğrafları yüklerken isimlerin aşağıdaki 'img' kısımlarıyla
+       BİREBİR AYNI (küçük harf) olmasına dikkat et.
+       Örneğin: 'resimler/paris.jpg' yazıyorsa, dosyanın adı 'paris.jpg' olmalı.
+    */
+
+    const products = [
+        // --- 1. BAHÇE MOBİLYA (Okra Grubu) ---
+        { 
+            cat: 'bahce', 
+            title: 'Paris Bahçe Takımı', 
+            code: 'OKT-17', 
+            img: 'resimler/paris.jpg', 
+            desc: 'Modern tasarım, geniş bahçe masası ve rahat sandalyeleri.' 
+        },
+        { 
+            cat: 'bahce', 
+            title: 'Eyfel Kütük Masa', 
+            code: 'OKT-21', 
+            img: 'resimler/eyfel.jpg', 
+            desc: 'Doğal kütük görünümü, metal ayaklı sağlam yapı.' 
+        },
+        { 
+            cat: 'bahce', 
+            title: 'Oslo Bar Seti', 
+            code: 'OKT-22', 
+            img: 'resimler/oslo.jpg', 
+            desc: 'Yüksek bar masası ve şık tabureleri.' 
+        },
+        { 
+            cat: 'bahce', 
+            title: 'Klasik Bahçe Seti', 
+            code: 'OKT-01', 
+            img: 'resimler/klasik.jpg', 
+            desc: 'Klasik sevenler için ergodinamik tasarım.' 
+        },
+
+        // --- 2. KOLTUK TAKIMLARI (Agah Grubu) ---
+        { 
+            cat: 'koltuk', 
+            title: 'Bohem Koltuk Takımı', 
+            code: 'Agah BOHEM', 
+            img: 'resimler/bohem.jpg', 
+            desc: '3+3+1+1 Konforlu sünger yapısı ve silinebilir kumaş.' 
+        },
+        { 
+            cat: 'koltuk', 
+            title: 'Bohem Tekli Berjer', 
+            code: 'Agah TEKLİ', 
+            img: 'resimler/tekli.jpg', 
+            desc: 'Geniş oturumlu, modern tekli koltuk.' 
+        },
+        { 
+            cat: 'koltuk', 
+            title: 'Chester Lüks Takım', 
+            code: 'Agah CHESTER', 
+            img: 'resimler/chester.jpg', 
+            desc: 'Kapitone işçilikli, salon şıklığını yansıtan özel model.' 
+        },
+
+        // --- 3. KORKULUK SİSTEMLERİ ---
+        { 
+            cat: 'korkuluk', 
+            title: 'Alüminyum Korkuluk', 
+            code: 'KRL-01', 
+            img: 'resimler/korkuluk1.jpg', 
+            desc: 'Balkon ve merdivenler için paslanmaz kare profil sistem.' 
+        },
+        { 
+            cat: 'korkuluk', 
+            title: 'Camlı Korkuluk', 
+            code: 'KRL-02', 
+            img: 'resimler/korkuluk2.jpg', 
+            desc: 'Temperli cam ve alüminyum tutamaklı modern sistem.' 
+        },
+
+        // --- 4. MASA SANDALYE ---
+        { 
+            cat: 'masa', 
+            title: 'Mutfak Masa Seti', 
+            code: 'MS-01', 
+            img: 'resimler/masa1.jpg', 
+            desc: 'Açılır kapanır masa ve 4 adet sandalye.' 
+        },
+
+        // --- 5. BAZA & YATAK ---
+        { 
+            cat: 'baza', 
+            title: 'Baza Başlık Seti', 
+            code: 'BZ-01', 
+            img: 'resimler/baza1.jpg', 
+            desc: 'Geniş sandıklı baza ve dekoratif başlık.' 
+        },
+        { 
+            cat: 'baza', 
+            title: 'Plus Yatak', 
+            code: 'Agah PLUS', 
+            img: 'resimler/plus.jpg', 
+            desc: 'Tam ortopedik, yüksek yoğunluklu sünger teknolojisi.' 
+        },
+        { 
+            cat: 'baza', 
+            title: 'Aqua Yatak', 
+            code: 'Agah AQUA', 
+            img: 'resimler/aqua.jpg', 
+            desc: 'Herkül yay sistemi ve terletmeyen örgü kumaş.' 
+        },
+
+        // --- 6. GARDROP ---
+        { 
+            cat: 'dolap', 
+            title: 'Sürgülü Gardrop', 
+            code: 'GD-01', 
+            img: 'resimler/dolap1.jpg', 
+            desc: 'Aynalı, frenli sürgü kapak sistemi ve geniş iç hacim.' 
+        }
+    ];
+
+    const gallery = document.getElementById('gallery');
+    
+    function filter(key) {
+        gallery.innerHTML = '';
+        document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const filtered = key === 'all' ? products : products.filter(p => p.cat === key);
+
+        if(filtered.length === 0) {
+            gallery.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:30px; color:#777; font-size:1.1rem;">Bu kategoride henüz ürün görseli yüklenmedi.</p>';
+            return;
+        }
+
+        filtered.forEach(p => {
+            let catName = p.cat.toUpperCase();
+            if(p.cat === 'bahce') catName = 'BAHÇE';
+            if(p.cat === 'koltuk') catName = 'KOLTUK';
+            if(p.cat === 'korkuluk') catName = 'KORKULUK';
+            if(p.cat === 'dolap') catName = 'DOLAP';
+
+            // WhatsApp linkini oluştur
+            const waLink = `https://wa.me/905555555555?text=Merhaba, ${p.title} (${p.code}) modeli hakkında fiyat bilgisi almak istiyorum.`;
+
+            const html = `
+            <div class="card">
+                <div class="img-wrap" onclick="showLb('${p.img}')">
+                    <span class="badge">${catName}</span>
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/400x300?text=FOTOĞRAF+YOK'; this.style.objectFit='contain';">
+                </div>
+                <div class="info">
+                    <h3 class="title">${p.title}</h3>
+                    <p class="desc">${p.desc}</p>
+                    <div class="code"><i class="fas fa-barcode"></i> ${p.code}</div>
+                    <a href="${waLink}" target="_blank" class="whatsapp-card">
+                        <i class="fab fa-whatsapp"></i> Fiyat Sor & Sipariş
+                    </a>
+                </div>
+            </div>`;
+            gallery.innerHTML += html;
+        });
+    }
+
+    function showLb(src) {
+        document.getElementById('lightbox').style.display = 'flex';
+        document.getElementById('lb-img').src = src;
+    }
+
+    // Açılışta hepsi gelsin
+    filter('all');
+</script>
+
+</body>
+</html>            display: flex; align-items: center; justify-content: center;
             text-align: center; color: white; padding: 20px;
         }
         .hero h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 5px black; }
